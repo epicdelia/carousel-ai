@@ -1,6 +1,7 @@
 "use client";
 
 import { TextInput, SlidePreview, SlideEditor } from "@/components/carousel";
+import { TemplateGallery } from "@/components/templates";
 import { useCarouselStore } from "@/lib/store/carousel-store";
 
 export default function Home() {
@@ -37,6 +38,13 @@ export default function Home() {
                 Generating your carousel...
               </p>
             </div>
+          )}
+
+          {/* Template Gallery Section */}
+          {slides.length > 0 && (
+            <section className="bg-white dark:bg-zinc-900 rounded-lg p-6 shadow-sm">
+              <TemplateGallery />
+            </section>
           )}
 
           {/* Slide Preview Section */}

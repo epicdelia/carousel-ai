@@ -33,3 +33,43 @@ export interface GenerateCarouselRequest {
 export interface GenerateCarouselResponse {
   slides: Slide[];
 }
+
+// Template types
+export type TemplateCategory = "professional" | "creative" | "minimal" | "bold";
+
+export interface TemplateColors {
+  title: {
+    from: string;
+    to: string;
+  };
+  content: {
+    from: string;
+    to: string;
+  };
+  cta: {
+    from: string;
+    to: string;
+  };
+  text: string;
+}
+
+export interface Template {
+  id: string;
+  name: string;
+  category: TemplateCategory;
+  description: string;
+  colors: TemplateColors;
+}
+
+export interface TemplateState {
+  templates: Template[];
+  selectedTemplateId: string | null;
+  filterCategory: TemplateCategory | "all";
+}
+
+export interface TemplateActions {
+  setSelectedTemplateId: (id: string | null) => void;
+  setFilterCategory: (category: TemplateCategory | "all") => void;
+}
+
+export type TemplateStore = TemplateState & TemplateActions;
