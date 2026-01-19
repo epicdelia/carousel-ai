@@ -2,9 +2,15 @@ import { NextResponse } from "next/server";
 import OpenAI from "openai";
 import type { Slide, GenerateCarouselRequest } from "@/types/carousel";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Lazy initialization to avoid build-time errors
+function getOpenAIClient() {
+  if (!process.env.OPENAI_API_KEY) {
+    return null;
+  }
+  return new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+}
 
 const SYSTEM_PROMPT = `You are an expert at creating engaging carousel content for social media.
 Given a text input, you will split it into 3-7 slides that are perfect for a carousel post.
@@ -50,7 +56,8 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!process.env.OPENAI_API_KEY) {
+    const openai = getOpenAIClient();
+    if (!openai) {
       // Return mock data for development when no API key is set
       const mockSlides = generateMockSlides(text);
       return NextResponse.json({ slides: mockSlides });

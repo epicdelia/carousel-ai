@@ -1,0 +1,78 @@
+{
+  "name": "Carousel AI - Text to Carousel Post Generator",
+  "description": "An AI-powered tool that transforms text content into beautiful carousel posts for Instagram, LinkedIn, and TikTok. Paste your content, pick a style, and get ready-to-post carousel slides.",
+  "branchName": "main",
+  "userStories": [
+    {
+      "id": "US-1",
+      "title": "Generate Carousel",
+      "description": "Generate Carousel",
+      "acceptanceCriteria": [
+        "Text input field (min 50 chars, max 5000)",
+        "AI processes and splits into slides",
+        "Shows preview of all slides",
+        "User can edit text on each slide",
+        "Generation takes < 10 seconds"
+      ],
+      "priority": 1,
+      "passes": true,
+      "labels": [],
+      "dependsOn": [],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-2",
+      "title": "Choose Template",
+      "description": "Choose Template",
+      "acceptanceCriteria": [
+        "Template gallery with previews",
+        "Filter by category/style",
+        "See template applied to my content",
+        "Switch templates without losing content"
+      ],
+      "priority": 2,
+      "passes": true,
+      "labels": [],
+      "dependsOn": [],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-3",
+      "title": "Customize Design",
+      "description": "Customize Design",
+      "acceptanceCriteria": [
+        "Color picker for brand colors",
+        "Font dropdown",
+        "Background style options",
+        "Logo upload",
+        "Real-time preview"
+      ],
+      "priority": 3,
+      "passes": true,
+      "labels": [],
+      "dependsOn": [],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-4",
+      "title": "Export Carousel",
+      "description": "Export Carousel",
+      "acceptanceCriteria": [
+        "Download all slides as PNGs (zip)",
+        "Download as single PDF",
+        "Correct dimensions per platform",
+        "High quality (1080x1080 for IG)"
+      ],
+      "priority": 4,
+      "passes": true,
+      "labels": [],
+      "dependsOn": [],
+      "completionNotes": "Completed by agent"
+    }
+  ],
+  "metadata": {
+    "createdAt": "2026-01-19T05:51:37.101Z",
+    "version": "1.0.0",
+    "updatedAt": "2026-01-19T06:22:47.007Z"
+  }
+}
