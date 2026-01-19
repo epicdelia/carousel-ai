@@ -3,6 +3,7 @@
 import { TextInput, SlidePreview, SlideEditor } from "@/components/carousel";
 import { TemplateGallery } from "@/components/templates";
 import { CustomizationPanel } from "@/components/customization";
+import { ExportPanel } from "@/components/export";
 import { useCarouselStore } from "@/lib/store/carousel-store";
 
 export default function Home() {
@@ -67,6 +68,13 @@ export default function Home() {
             <section className="bg-white dark:bg-zinc-900 rounded-lg p-6 shadow-sm">
               <h2 className="text-lg font-semibold mb-4">Edit Selected Slide</h2>
               <SlideEditor />
+            </section>
+          )}
+
+          {/* Export Panel Section */}
+          {slides.length > 0 && (
+            <section className="bg-white dark:bg-zinc-900 rounded-lg p-6 shadow-sm">
+              <ExportPanel />
             </section>
           )}
         </div>
