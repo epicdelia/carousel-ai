@@ -5,36 +5,56 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useCarouselStore } from "@/lib/store/carousel-store";
 import { useTemplateStore } from "@/lib/store/template-store";
+import { useCustomizationStore, defaultCustomColors } from "@/lib/store/customization-store";
 import { getTemplateById } from "@/lib/templates/template-data";
-import type { Slide, Template } from "@/types/carousel";
+import type { Slide, Template, CustomColors, BackgroundStyle, LogoPosition } from "@/types/carousel";
 import type { CSSProperties } from "react";
-
-// Default gradient colors (matching original design)
-const defaultColors = {
-  title: { from: "#9333ea", to: "#2563eb" },
-  content: { from: "#334155", to: "#0f172a" },
-  cta: { from: "#f97316", to: "#db2777" },
-  text: "#ffffff",
-};
 
 function getSlideStyles(
   slide: Slide,
-  template: Template | undefined
+  template: Template | undefined,
+  customColors: CustomColors | null,
+  backgroundStyle: BackgroundStyle
 ): { style: CSSProperties; textColor: string } {
-  const colors = template?.colors ?? defaultColors;
+  const colors = customColors ?? template?.colors ?? defaultCustomColors;
   const slideColors = colors[slide.type];
 
+  const background =
+    backgroundStyle === "gradient"
+      ? `linear-gradient(to bottom right, ${slideColors.from}, ${slideColors.to})`
+      : slideColors.from;
+
   return {
-    style: {
-      background: `linear-gradient(to bottom right, ${slideColors.from}, ${slideColors.to})`,
-    },
+    style: { background },
     textColor: colors.text,
   };
+}
+
+function getLogoPositionStyles(position: LogoPosition): CSSProperties {
+  const base: CSSProperties = { position: "absolute" };
+  switch (position) {
+    case "top-left":
+      return { ...base, top: "16px", left: "16px" };
+    case "top-right":
+      return { ...base, top: "16px", right: "16px" };
+    case "bottom-left":
+      return { ...base, bottom: "16px", left: "16px" };
+    case "bottom-right":
+      return { ...base, bottom: "16px", right: "16px" };
+  }
 }
 
 export function SlideEditor() {
   const { slides, selectedSlideIndex, updateSlide } = useCarouselStore();
   const { selectedTemplateId } = useTemplateStore();
+  const {
+    customColors,
+    backgroundStyle,
+    fontFamily,
+    logoUrl,
+    logoPosition,
+    logoOpacity,
+  } = useCustomizationStore();
 
   const template = selectedTemplateId
     ? getTemplateById(selectedTemplateId)
@@ -49,7 +69,7 @@ export function SlideEditor() {
     return null;
   }
 
-  const { style, textColor } = getSlideStyles(slide, template);
+  const { style, textColor } = getSlideStyles(slide, template, customColors, backgroundStyle);
 
   return (
     <div className="grid md:grid-cols-2 gap-6">
@@ -58,8 +78,8 @@ export function SlideEditor() {
         <h3 className="text-sm font-medium">Live Preview</h3>
         <Card className="overflow-hidden">
           <div
-            className="aspect-square p-8 flex flex-col justify-center items-center text-center"
-            style={{ ...style, color: textColor }}
+            className="aspect-square p-8 flex flex-col justify-center items-center text-center relative"
+            style={{ ...style, color: textColor, fontFamily }}
           >
             {slide.emoji && <span className="text-6xl mb-4">{slide.emoji}</span>}
             <h3 className="font-bold text-2xl leading-tight mb-3">
@@ -67,6 +87,17 @@ export function SlideEditor() {
             </h3>
             {slide.body && (
               <p className="text-base opacity-90">{slide.body}</p>
+            )}
+            {logoUrl && (
+              <img
+                src={logoUrl}
+                alt="Logo"
+                className="w-12 h-12 object-contain"
+                style={{
+                  ...getLogoPositionStyles(logoPosition),
+                  opacity: logoOpacity / 100,
+                }}
+              />
             )}
           </div>
         </Card>

@@ -2,6 +2,7 @@
 
 import { TextInput, SlidePreview, SlideEditor } from "@/components/carousel";
 import { TemplateGallery } from "@/components/templates";
+import { CustomizationPanel } from "@/components/customization";
 import { useCarouselStore } from "@/lib/store/carousel-store";
 
 export default function Home() {
@@ -44,6 +45,13 @@ export default function Home() {
           {slides.length > 0 && (
             <section className="bg-white dark:bg-zinc-900 rounded-lg p-6 shadow-sm">
               <TemplateGallery />
+            </section>
+          )}
+
+          {/* Customization Panel Section */}
+          {slides.length > 0 && (
+            <section className="bg-white dark:bg-zinc-900 rounded-lg p-6 shadow-sm">
+              <CustomizationPanel />
             </section>
           )}
 

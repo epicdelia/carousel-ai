@@ -73,3 +73,43 @@ export interface TemplateActions {
 }
 
 export type TemplateStore = TemplateState & TemplateActions;
+
+// Customization types
+export type BackgroundStyle = "gradient" | "solid";
+export type LogoPosition = "top-left" | "top-right" | "bottom-left" | "bottom-right";
+
+export interface CustomColors {
+  title: { from: string; to: string };
+  content: { from: string; to: string };
+  cta: { from: string; to: string };
+  text: string;
+}
+
+export interface CustomizationState {
+  isCustomizing: boolean;
+  customColors: CustomColors | null;
+  fontFamily: string;
+  backgroundStyle: BackgroundStyle;
+  logoUrl: string | null;
+  logoPosition: LogoPosition;
+  logoOpacity: number;
+}
+
+export interface CustomizationActions {
+  setIsCustomizing: (isCustomizing: boolean) => void;
+  setCustomColors: (colors: CustomColors | null) => void;
+  updateCustomColor: (
+    slideType: keyof Omit<CustomColors, "text">,
+    colorType: "from" | "to",
+    value: string
+  ) => void;
+  setTextColor: (color: string) => void;
+  setFontFamily: (font: string) => void;
+  setBackgroundStyle: (style: BackgroundStyle) => void;
+  setLogoUrl: (url: string | null) => void;
+  setLogoPosition: (position: LogoPosition) => void;
+  setLogoOpacity: (opacity: number) => void;
+  resetCustomization: () => void;
+}
+
+export type CustomizationStore = CustomizationState & CustomizationActions;
